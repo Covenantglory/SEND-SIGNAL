@@ -1,0 +1,407 @@
+# Send Signal — Implementation Plan
+
+## Goal
+
+Build a production-ready, full-stack WhatsApp outreach automation SaaS using Next.js (App Router), Prisma, PostgreSQL, with all styling from `design-tokens.css`. The system includes a public marketing site, authentication, onboarding wizard, and a full dashboard with leads, templates, campaigns, messages, and analytics modules.
+
+---
+
+## Documents Fully Read & Internalized
+
+| Document | Status |
+|---|---|
+| `database-schema.md` | ✅ Read (907 lines, 14 entities, 6 enums) |
+| `architecture.md` | ✅ Read (198 lines, 5 layers, unified Next.js app) |
+| `agents.md` | ✅ Read (289 lines, product rules, compliance) |
+| `design-tokens.css` | ✅ Read (786 lines, full token system) |
+| `skills/skill.md` | ✅ Read (general code organization rules) |
+| `skills/colors.md` | ✅ Read (484 lines, MD3-influenced color system) |
+| `skills/typography.md` | ✅ Read (typography scale, Roboto, rem units) |
+| `skills/foms.md` | ✅ Read (form layout, validation, error display) |
+| `skills/tables.md` | ✅ Read (pagination, badges, empty states) |
+| `skills/empty-states.md` | ✅ Read (required for all data pages) |
+| `skills/loading-states.md` | ✅ Read (skeleton loaders, progress) |
+| `skills/notifications.md` | ✅ Read (toast system, auto-dismiss) |
+| `skills/csv-import.md` | ✅ Read (column mapping, E.164, preview) |
+| `skills/api-handlers.md` | ✅ Read (JSON responses, status codes) |
+| `skills/validations.md` | ✅ Read (server-side, E.164, placeholder validation) |
+
+---
+
+## User Review Required
+
+> [!IMPORTANT]
+> **PostgreSQL Database**: You need a PostgreSQL database running. Do you have one set up locally, or should I configure the project to use a cloud provider (e.g., Neon, Supabase, Railway)?
+
+> [!IMPORTANT]
+> **WhatsApp Business API**: The system will build a full abstraction layer for the WhatsApp Cloud API. We'll need your `WHATSAPP_PHONE_NUMBER_ID`, `WHATSAPP_BUSINESS_ACCOUNT_ID`, and `WHATSAPP_ACCESS_TOKEN` as environment variables. For now, I'll build the integration layer with proper mocking for development.
+
+> [!WARNING]
+> **Design Token Mapping**: Your `design-tokens.css` uses long variable names (e.g., `--sys-primitive-colour-collection-key-colour-group-primary-key-colour`). I will create a **semantic alias layer** that maps these to short, usable tokens (e.g., `--color-primary`, `--color-surface`, etc.) as specified in `skills/colors.md`. This is essential for developer ergonomics. The alias layer will reference the original tokens — no hex values will be used.
+
+> [!IMPORTANT]
+> **Scope & Phasing**: This is a massive application. I will build it in 8 phases, each delivering a working increment. **I recommend starting with Phases 1-3** (foundation, database, marketing site) and then continuing. Should I build all 8 phases in sequence, or would you prefer to review after each phase?
+
+---
+
+## Proposed Changes
+
+### Phase 1: Project Foundation
+
+Set up the Next.js application, install dependencies, configure the design system, and establish the folder structure.
+
+---
+
+#### [NEW] Next.js App Initialization
+- Initialize Next.js 14+ with App Router via `npx create-next-app`
+- Configure TypeScript, ESLint
+- Install Prisma, bcryptjs, jose (for JWT), papaparse (CSV), zod (validation)
+
+#### [NEW] `src/app/globals.css`
+- Import `design-tokens.css` 
+- Create semantic alias layer mapping long token names to short ones:
+  - `--color-primary` → `var(--sys-primitive-colour-collection-key-colour-group-primary-key-colour)` (#0583f1)
+  - `--color-on-primary` → white
+  - `--color-surface` → `var(--sys-color-solid-system-surface)` (#1c1c20)
+  - `--color-background` → `var(--sys-color-solid-system-background)` (#101012)
+  - `--color-on-surface` → `var(--sys-color-solid-system-text)` (#e6e6e6)
+  - `--color-error` → `var(--sys-color-solid-system-error)` (#ef4444)
+  - `--color-success` → `var(--sys-color-solid-system-success)` (#10b981)
+  - `--color-warning` → `var(--sys-color-solid-system-warning)` (#f59e0b)
+  - `--color-outline` → `var(--sys-color-roles-example-stroke-for-defaul-state)` (#454242)
+  - `--color-surface-variant` → `var(--sys-color-roles-example-side-menu)` (#222222)
+  - Plus all secondary, tertiary, accent, container, and on-* variants
+- Typography utility classes using token variables
+- Google Fonts import for Roboto
+
+#### [NEW] `src/app/layout.tsx`
+- Root layout with Roboto font, metadata, globals.css import
+
+#### [NEW] Project folder structure
+```
+src/
+├── app/
+│   ├── (marketing)/          # Public marketing pages
+│   │   ├── page.tsx          # Landing page
+│   │   └── layout.tsx        # Marketing layout
+│   ├── (auth)/               # Auth pages
+│   │   ├── login/page.tsx
+│   │   ├── signup/page.tsx
+│   │   └── layout.tsx
+│   ├── (dashboard)/          # Protected dashboard
+│   │   ├── layout.tsx        # Sidebar + header layout
+│   │   ├── page.tsx          # Dashboard overview
+│   │   ├── leads/
+│   │   ├── templates/
+│   │   ├── campaigns/
+│   │   ├── messages/
+│   │   ├── analytics/
+│   │   ├── conversations/
+│   │   └── settings/
+│   ├── (onboarding)/         # Onboarding wizard
+│   │   └── onboarding/page.tsx
+│   ├── api/                  # API routes
+│   │   ├── auth/
+│   │   ├── leads/
+│   │   ├── templates/
+│   │   ├── campaigns/
+│   │   ├── messages/
+│   │   ├── webhooks/
+│   │   └── analytics/
+│   ├── globals.css
+│   └── layout.tsx
+├── components/               # Reusable UI components
+│   ├── ui/                   # Primitives (Button, Input, Badge, etc.)
+│   ├── layout/               # Sidebar, Header, etc.
+│   └── shared/               # Toast, EmptyState, etc.
+├── lib/                      # Server-side utilities
+│   ├── prisma.ts
+│   ├── auth.ts
+│   ├── whatsapp.ts
+│   ├── csv.ts
+│   ├── validation.ts
+│   └── utils.ts
+└── types/                    # TypeScript types
+```
+
+---
+
+### Phase 2: Database & Authentication
+
+#### [NEW] `prisma/schema.prisma`
+Full Prisma schema with all 14 entities from `database-schema.md`:
+- `User`, `Session`, `WhatsappAccount`, `Lead`, `LeadTag`, `LeadTagAssignment`
+- `Template`, `Campaign`, `CampaignLead`, `Message`, `MessageEvent`
+- `Conversation`, `ConversationMessage`, `ActivityLog`, `AnalyticsSnapshot`
+- All 6 enums: `UserRole`, `LeadStatus`, `CampaignStatus`, `MessageStatus`, `MessageDirection`, `EventType`, `ConversationSource`
+- All composite unique constraints, indexes, and relations per spec
+- UUID primary keys, timestamps on all entities
+
+#### [NEW] `src/lib/auth.ts`
+- Password hashing with bcryptjs
+- JWT token creation/verification with jose
+- Session creation in database
+- `getCurrentUser()` helper for server components
+- `requireAuth()` middleware for API routes
+
+#### [NEW] `src/app/api/auth/signup/route.ts`
+- Server-side validation (email, password, company name)
+- Duplicate email check
+- Create user record
+- Create session, set HTTP-only cookie
+- Return user data
+
+#### [NEW] `src/app/api/auth/login/route.ts`
+- Email/password verification
+- Session creation
+- HTTP-only cookie
+
+#### [NEW] `src/app/api/auth/logout/route.ts`
+- Session deletion, cookie clearing
+
+#### [NEW] `src/app/(auth)/signup/page.tsx` & `login/page.tsx`
+- Forms using design tokens
+- Server-side validation
+- Error display below fields
+- Loading states on submit
+- Redirect to onboarding (signup) or dashboard (login)
+
+#### [NEW] `src/middleware.ts`
+- Protect `/dashboard/*` routes
+- Redirect unauthenticated users to login
+- Redirect authenticated users away from auth pages
+
+---
+
+### Phase 3: Marketing Landing Page
+
+#### [NEW] `src/app/(marketing)/page.tsx`
+Premium, dark-themed landing page with sections:
+- **Hero**: Display-large headline, value proposition, "Get Started" CTA
+- **Features**: 6 feature cards (CSV import, templates, campaigns, messaging, analytics, compliance)
+- **Use Cases**: Solo founders, bootcamps/institutions, agencies
+- **How It Works**: 4-step visual flow
+- **CTA Section**: Final conversion call to action
+- All styling from design tokens, subtle animations, glassmorphism cards
+
+#### [NEW] `src/app/(marketing)/layout.tsx`
+- Navigation bar with logo, links, "Get Started" button
+- Footer with links
+
+---
+
+### Phase 4: Onboarding Wizard
+
+#### [NEW] `src/app/(onboarding)/onboarding/page.tsx`
+6-step wizard (client component with state management):
+
+1. **Welcome Screen** — Product intro, "Continue Setup" CTA
+2. **WhatsApp Connection** — Form for Phone Number ID, Business Account ID, Access Token; validate connection via API call
+3. **Lead Import** — CSV upload, column mapping UI, validation preview, duplicate detection, confirm import
+4. **First Template** — Template builder with placeholder insertion (`{{first_name}}`, `{{last_name}}`, etc.), live preview with sample lead data
+5. **First Campaign** — Select imported leads, select template, set batch size & delay, estimated reach display, optional scheduling
+6. **Completion** — Success message, redirect to dashboard
+
+#### [NEW] `src/components/onboarding/` (step components)
+- `WelcomeStep.tsx`, `WhatsappStep.tsx`, `LeadImportStep.tsx`, `TemplateStep.tsx`, `CampaignStep.tsx`, `CompletionStep.tsx`
+
+---
+
+### Phase 5: Dashboard — Core Modules
+
+#### [NEW] `src/app/(dashboard)/layout.tsx`
+- Sidebar navigation (collapsible) with icons for: Dashboard, Leads, Templates, Campaigns, Messages, Analytics, Conversations, Settings
+- Top header bar with user info, notifications
+- Main content area
+
+#### [NEW] `src/app/(dashboard)/page.tsx`
+- Overview dashboard with summary stats cards (total leads, active campaigns, messages sent, delivery rate)
+- Recent activity feed
+- Quick action buttons
+
+---
+
+#### Dashboard: Leads Module
+
+#### [NEW] `src/app/(dashboard)/leads/page.tsx`
+- Leads table with pagination, search, filtering by status/tags
+- Status badges using semantic colors
+- Bulk actions (tag, delete)
+- "Import Leads" button → CSV import modal
+- Empty state when no leads
+
+#### [NEW] `src/app/(dashboard)/leads/[id]/page.tsx`
+- Lead detail view with activity timeline
+- Edit lead info
+- View message history
+- Tag management
+
+#### [NEW] `src/app/api/leads/route.ts` (GET, POST)
+#### [NEW] `src/app/api/leads/[id]/route.ts` (GET, PATCH, DELETE)
+#### [NEW] `src/app/api/leads/import/route.ts` (POST — CSV import)
+
+---
+
+#### Dashboard: Templates Module
+
+#### [NEW] `src/app/(dashboard)/templates/page.tsx`
+- Templates grid/list view
+- Create/edit template modal
+- Placeholder insertion toolbar
+- Live preview with sample data
+- Empty state
+
+#### [NEW] `src/app/api/templates/route.ts` (GET, POST)
+#### [NEW] `src/app/api/templates/[id]/route.ts` (GET, PATCH, DELETE)
+
+---
+
+#### Dashboard: Campaigns Module
+
+#### [NEW] `src/app/(dashboard)/campaigns/page.tsx`
+- Campaign list with status badges
+- Create campaign wizard (multi-step)
+- Campaign progress tracking
+- Empty state
+
+#### [NEW] `src/app/(dashboard)/campaigns/[id]/page.tsx`
+- Campaign detail with real-time stats
+- Recipient list
+- Message delivery breakdown
+- Pause/Resume/Cancel controls
+
+#### [NEW] `src/app/api/campaigns/route.ts` (GET, POST)
+#### [NEW] `src/app/api/campaigns/[id]/route.ts` (GET, PATCH)
+#### [NEW] `src/app/api/campaigns/[id]/execute/route.ts` (POST)
+
+---
+
+#### Dashboard: Messages Module
+
+#### [NEW] `src/app/(dashboard)/messages/page.tsx`
+- Message logs table with status, direction, timestamps
+- Filtering by campaign, status, lead
+- Message event detail view
+- Empty state
+
+#### [NEW] `src/app/api/messages/route.ts` (GET)
+
+---
+
+#### Dashboard: Analytics Module
+
+#### [NEW] `src/app/(dashboard)/analytics/page.tsx`
+- Campaign performance charts (sent/delivered/read/replied/converted)
+- Overall metrics cards
+- Time-range filtering
+- Campaign comparison
+
+#### [NEW] `src/app/api/analytics/route.ts` (GET)
+
+---
+
+### Phase 6: Campaign Execution Engine
+
+#### [NEW] `src/lib/whatsapp.ts`
+- WhatsApp Cloud API client (server-side only)
+- Send message function
+- Template message support
+- Error handling and retry logic
+- **Never expose credentials**
+
+#### [NEW] `src/lib/campaign-executor.ts`
+- Database-driven queue system:
+  1. Create `campaign_leads` records for selected leads (filtered for unsubscribed, duplicates)
+  2. Process batches based on `batch_size` and `delay_in_seconds`
+  3. For each lead: render template → send via WhatsApp API → create message record → create message_event
+  4. Update campaign counters
+  5. Handle failures with retry logic (attempt_count, last_attempt_at)
+- Idempotency via composite unique constraints
+
+#### [NEW] `src/app/api/webhooks/whatsapp/route.ts`
+- Webhook verification (GET)
+- Event processing (POST): delivered, read, reply detection
+- Unsubscribe keyword detection (STOP, UNSUBSCRIBE, CANCEL, END, QUIT)
+- Update message status, create message_events
+- Update lead unsubscribed status
+
+#### [NEW] `src/app/api/campaigns/process/route.ts`
+- Cron-triggered endpoint to process pending campaign batches
+- Select RUNNING campaigns with unprocessed campaign_leads
+- Execute in batches respecting rate limits
+
+---
+
+### Phase 7: Conversations Module
+
+#### [NEW] `src/app/(dashboard)/conversations/page.tsx`
+- Conversation list (sorted by last_message_at)
+- Chat-like message view
+- Search leads
+- Empty state
+
+#### [NEW] `src/app/api/conversations/route.ts` (GET)
+#### [NEW] `src/app/api/conversations/[id]/route.ts` (GET)
+
+---
+
+### Phase 8: Polish & Verification
+
+#### Reusable UI Components
+- `src/components/ui/button.tsx` — Primary, secondary, outline variants
+- `src/components/ui/input.tsx` — With label, error state, focus ring
+- `src/components/ui/badge.tsx` — Status badges with semantic colors
+- `src/components/ui/modal.tsx` — Dialog component
+- `src/components/ui/table.tsx` — Paginated table with sorting
+- `src/components/ui/card.tsx` — Surface-styled cards
+- `src/components/ui/skeleton.tsx` — Loading skeletons
+- `src/components/shared/empty-state.tsx` — Title, description, CTA
+- `src/components/shared/toast.tsx` — Toast notification system (5-10s auto-dismiss)
+- `src/components/shared/notification-provider.tsx` — Global notification context
+
+#### Settings Page
+- `src/app/(dashboard)/settings/page.tsx` — WhatsApp account management, profile settings
+
+---
+
+## Design System Rules (Enforced Across All Phases)
+
+| Rule | Enforcement |
+|---|---|
+| All colors from `design-tokens.css` | No hex values, no Tailwind color utilities |
+| Typography from design tokens | Roboto, font sizes in rem, clamp for display text |
+| Semantic color roles | `--color-primary`, `--color-surface`, `--color-error`, etc. |
+| Empty states on all data pages | Title + explanation + CTA button |
+| Loading states on async ops | Skeleton loaders, submit button spinners |
+| Notifications | Toast system (success/error/warning), auto-dismiss |
+| Forms | Labels, required markers, server-side validation, error below field |
+| Tables | Pagination, status badges, search/filter, empty states |
+| Naming | Files: kebab-case, Components: PascalCase, Functions: camelCase |
+
+---
+
+## Open Questions
+
+> [!IMPORTANT]
+> 1. **Database Setup**: Do you have PostgreSQL running locally, or should I target a cloud database like Neon/Supabase?
+> 2. **All Phases At Once**: Should I build all 8 phases sequentially in this session, or do you want to review after each phase?
+> 3. **WhatsApp API Mode**: Should I implement with real API calls + env vars, or build a mock/development mode first so you can test without an active WhatsApp Business account?
+
+---
+
+## Verification Plan
+
+### Automated Tests
+- `npx prisma validate` — Schema validation
+- `npx prisma generate` — Client generation
+- `npm run build` — Full Next.js production build
+- Browser verification of each page route
+
+### Manual Verification
+- Navigate marketing page → signup → onboarding → dashboard flow
+- Verify all design tokens are applied (no raw hex visible)
+- Verify empty states render on all data pages
+- Verify form validation and error display
+- Verify notification toast system
+- CSV import with sample data
+- Campaign creation flow end-to-end

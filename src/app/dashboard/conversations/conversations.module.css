@@ -1,0 +1,103 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-family: var(--font-title-large);
+  font-size: var(--text-title-large);
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+.conversationList {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid var(--color-outline);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.conversationItem {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  cursor: pointer;
+  transition: background 0.2s ease;
+  border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.conversationItem:last-child {
+  border-bottom: none;
+}
+
+.conversationItem:hover {
+  background: var(--color-surface-variant);
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+  font-family: var(--font-title-medium);
+  font-size: var(--text-title-medium);
+  font-weight: 600;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.conversationContent {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.conversationHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.contactName {
+  font-family: var(--font-title-medium);
+  font-size: var(--text-title-medium);
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+.time {
+  font-family: var(--font-label-small);
+  font-size: var(--text-label-small);
+  color: var(--color-on-surface-variant);
+  flex-shrink: 0;
+}
+
+.lastMessage {
+  font-family: var(--font-body-medium);
+  font-size: var(--text-body-medium);
+  color: var(--color-on-surface-variant);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.conversationMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}

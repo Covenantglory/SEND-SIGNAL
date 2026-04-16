@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.search {
+  flex: 1;
+  max-width: 400px;
+}
+
+.phoneNumber {
+  font-family: var(--font-body-medium);
+  color: var(--color-primary);
+}
+
+.importModal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.uploadArea {
+  padding: var(--spacing-2xl);
+  border: 2px dashed var(--color-outline);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.uploadArea:hover {
+  border-color: var(--color-primary);
+  background: var(--color-surface-variant);
+}
+
+.uploadArea input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.uploadArea p {
+  font-family: var(--font-body-medium);
+  font-size: var(--text-body-medium);
+  color: var(--color-on-surface-variant);
+}
+
+.importActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+}

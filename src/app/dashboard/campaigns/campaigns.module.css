@@ -1,0 +1,70 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-family: var(--font-title-large);
+  font-size: var(--text-title-large);
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+.campaignInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.campaignName {
+  font-family: var(--font-title-medium);
+  font-size: var(--text-title-medium);
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+.campaignDescription {
+  font-family: var(--font-body-small);
+  font-size: var(--text-body-small);
+  color: var(--color-on-surface-variant);
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  min-width: 120px;
+}
+
+.progressBar {
+  height: 6px;
+  background: var(--color-surface-variant);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease;
+}
+
+.progressText {
+  font-family: var(--font-label-small);
+  font-size: var(--text-label-small);
+  color: var(--color-on-surface-variant);
+}
+
+.stat {
+  font-family: var(--font-body-medium);
+  font-size: var(--text-body-medium);
+  color: var(--color-on-surface);
+}

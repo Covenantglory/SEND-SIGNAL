@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-family: var(--font-title-large);
+  font-size: var(--text-title-large);
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+.recipient {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.phoneNumber {
+  font-family: var(--font-body-medium);
+  font-size: var(--text-body-medium);
+  color: var(--color-on-surface);
+}
+
+.name {
+  font-family: var(--font-label-small);
+  font-size: var(--text-label-small);
+  color: var(--color-on-surface-variant);
+}
+
+.outbound {
+  color: var(--color-primary);
+}
+
+.inbound {
+  color: var(--color-success);
+}
+
+.time {
+  font-family: var(--font-body-small);
+  font-size: var(--text-body-small);
+  color: var(--color-on-surface-variant);
+}

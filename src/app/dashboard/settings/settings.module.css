@@ -1,0 +1,87 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.accountCard {
+  max-width: 800px;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-2xl);
+  text-align: center;
+}
+
+.emptyState p {
+  font-family: var(--font-body-medium);
+  font-size: var(--text-body-medium);
+  color: var(--color-on-surface-variant);
+}
+
+.accountList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.accountItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md);
+  background: var(--color-surface-variant);
+  border-radius: var(--radius-md);
+}
+
+.accountInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.accountName {
+  font-family: var(--font-title-medium);
+  font-size: var(--text-title-medium);
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+.accountPhone {
+  font-family: var(--font-body-small);
+  font-size: var(--text-body-small);
+  color: var(--color-on-surface-variant);
+}
+
+.accountStatus {
+  font-family: var(--font-label-small);
+  font-size: var(--text-label-small);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: var(--color-error-container);
+  color: var(--color-on-error-container);
+}
+
+.accountStatus.active {
+  background: var(--color-success-container);
+  color: var(--color-on-success-container);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--color-outline);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+}

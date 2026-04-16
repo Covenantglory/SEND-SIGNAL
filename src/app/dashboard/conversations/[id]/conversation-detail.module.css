@@ -1,0 +1,80 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.title {
+  font-family: var(--font-title-large);
+  font-size: var(--text-title-large);
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+.conversationCard {
+  padding: 0;
+  height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+}
+
+.conversationCard > div {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-lg);
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.message {
+  display: flex;
+}
+
+.message.outbound {
+  justify-content: flex-end;
+}
+
+.message.inbound {
+  justify-content: flex-start;
+}
+
+.messageBubble {
+  max-width: 70%;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+}
+
+.outbound .messageBubble {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-bottom-right-radius: var(--radius-sm);
+}
+
+.inbound .messageBubble {
+  background: var(--color-surface-variant);
+  color: var(--color-on-surface);
+  border-bottom-left-radius: var(--radius-sm);
+}
+
+.messageBubble p {
+  font-family: var(--font-body-medium);
+  font-size: var(--text-body-medium);
+  line-height: 1.5;
+  margin-bottom: var(--spacing-xs);
+}
+
+.messageTime {
+  font-family: var(--font-label-small);
+  font-size: var(--text-label-small);
+  opacity: 0.7;
+}
