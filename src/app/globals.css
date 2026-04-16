@@ -3,51 +3,51 @@
 
 :root {
   --color-primary: var(--sys-primitive-colour-collection-key-colour-group-primary-key-colour);
-  --color-on-primary: var(--sys-color-solid-system-white);
-  --color-primary-container: var(--sys-primitive-colour-collection-color-palettes-primary-primary-90);
-  --color-on-primary-container: var(--sys-primitive-colour-collection-color-palettes-primary-primary-30);
+  --color-on-primary: var(--sys-primitive-colour-collection-color-palettes-primary-primary-99);
+  --color-primary-container: var(--sys-primitive-colour-collection-color-palettes-primary-primary-95);
+  --color-on-primary-container: var(--sys-primitive-colour-collection-color-palettes-primary-primary-20);
 
   --color-secondary: var(--sys-primitive-colour-collection-key-colour-group-secondary-key-colour);
-  --color-on-secondary: var(--sys-primitive-colour-collection-color-palettes-secondary-secondary-100);
-  --color-secondary-container: var(--sys-primitive-colour-collection-color-palettes-secondary-secondary-90);
-  --color-on-secondary-container: var(--sys-primitive-colour-collection-color-palettes-secondary-secondary-30);
+  --color-on-secondary: var(--sys-primitive-colour-collection-color-palettes-secondary-secondary-99);
+  --color-secondary-container: var(--sys-primitive-colour-collection-color-palettes-secondary-secondary-95);
+  --color-on-secondary-container: var(--sys-primitive-colour-collection-color-palettes-secondary-secondary-20);
 
   --color-tertiary: var(--sys-primitive-colour-collection-key-colour-group-tertiary-key-color);
-  --color-on-tertiary: var(--sys-primitive-colour-collection-color-palettes-tertiary-tertiary-100);
-  --color-tertiary-container: var(--sys-primitive-colour-collection-color-palettes-tertiary-tertiary-90);
-  --color-on-tertiary-container: var(--sys-primitive-colour-collection-color-palettes-tertiary-tertiary-30);
+  --color-on-tertiary: var(--sys-primitive-colour-collection-color-palettes-tertiary-tertiary-99);
+  --color-tertiary-container: var(--sys-primitive-colour-collection-color-palettes-tertiary-tertiary-95);
+  --color-on-tertiary-container: var(--sys-primitive-colour-collection-color-palettes-tertiary-tertiary-20);
 
   --color-accent: var(--sys-primitive-colour-collection-key-colour-group-accent-key-color);
-  --color-on-accent: var(--sys-primitive-colour-collection-color-palettes-accent-accent-100);
-  --color-accent-container: var(--sys-primitive-colour-collection-color-palettes-accent-accent-90);
-  --color-on-accent-container: var(--sys-primitive-colour-collection-color-palettes-accent-accent-30);
+  --color-on-accent: var(--sys-primitive-colour-collection-color-palettes-accent-accent-99);
+  --color-accent-container: var(--sys-primitive-colour-collection-color-palettes-accent-accent-95);
+  --color-on-accent-container: var(--sys-primitive-colour-collection-color-palettes-accent-accent-20);
 
-  --color-surface: var(--sys-color-solid-system-surface);
-  --color-surface-variant: var(--sys-color-roles-example-side-menu);
-  --color-surface-container: var(--sys-primitive-colour-collection-color-palettes-neutral-neutral-80);
-  --color-surface-container-high: var(--sys-primitive-colour-collection-color-palettes-neutral-variant-neutral-variant-80);
-  --color-background: var(--sys-color-solid-system-background);
-  --color-on-surface: var(--sys-color-solid-system-text);
-  --color-on-surface-variant: var(--sys-color-text-muted-color);
-  --color-on-background: var(--sys-color-solid-system-text);
+  --color-surface: var(--sys-primitive-colour-collection-color-palettes-primary-primary-99);
+  --color-surface-variant: var(--sys-primitive-colour-collection-color-palettes-neutral-neutral-90);
+  --color-surface-container: var(--sys-primitive-colour-collection-color-palettes-neutral-neutral-95);
+  --color-surface-container-high: var(--sys-primitive-colour-collection-color-palettes-neutral-neutral-90);
+  --color-background: var(--sys-primitive-colour-collection-color-palettes-primary-primary-99);
+  --color-on-surface: var(--sys-primitive-colour-collection-color-palettes-neutral-neutral-10);
+  --color-on-surface-variant: var(--sys-primitive-colour-collection-color-palettes-neutral-neutral-50);
+  --color-on-background: var(--sys-primitive-colour-collection-color-palettes-neutral-neutral-10);
 
-  --color-outline: var(--sys-color-roles-example-stroke-for-defaul-state);
-  --color-outline-variant: var(--sys-primitive-colour-collection-color-palettes-neutral-neutral-70);
+  --color-outline: var(--sys-primitive-colour-collection-color-palettes-neutral-neutral-50);
+  --color-outline-variant: var(--sys-primitive-colour-collection-color-palettes-neutral-neutral-80);
 
   --color-error: var(--sys-primitive-colour-collection-key-colour-group-error-key-colour);
-  --color-on-error: var(--sys-primitive-colour-collection-color-palettes-error-error-100);
-  --color-error-container: var(--sys-primitive-colour-collection-color-palettes-error-error-90);
-  --color-on-error-container: var(--sys-primitive-colour-collection-color-palettes-error-error-30);
+  --color-on-error: var(--sys-primitive-colour-collection-color-palettes-error-error-99);
+  --color-error-container: var(--sys-primitive-colour-collection-color-palettes-error-error-95);
+  --color-on-error-container: var(--sys-primitive-colour-collection-color-palettes-error-error-20);
 
   --color-success: var(--sys-primitive-colour-collection-key-colour-group-success-key-colour);
-  --color-on-success: var(--sys-primitive-colour-collection-color-palettes-success-success-100);
-  --color-success-container: var(--sys-primitive-colour-collection-color-palettes-success-success-90);
-  --color-on-success-container: var(--sys-primitive-colour-collection-color-palettes-success-success-30);
+  --color-on-success: var(--sys-primitive-colour-collection-color-palettes-success-success-99);
+  --color-success-container: var(--sys-primitive-colour-collection-color-palettes-success-success-95);
+  --color-on-success-container: var(--sys-primitive-colour-collection-color-palettes-success-success-20);
 
   --color-warning: var(--sys-primitive-colour-collection-key-colour-group-warning-key-colour);
-  --color-on-warning: var(--sys-primitive-colour-collection-color-palettes-warning-warning-100);
-  --color-warning-container: var(--sys-primitive-colour-collection-color-palettes-warning-warning-90);
-  --color-on-warning-container: var(--sys-primitive-colour-collection-color-palettes-warning-warning-30);
+  --color-on-warning: var(--sys-primitive-colour-collection-color-palettes-warning-warning-99);
+  --color-warning-container: var(--sys-primitive-colour-collection-color-palettes-warning-warning-95);
+  --color-on-warning-container: var(--sys-primitive-colour-collection-color-palettes-warning-warning-20);
 
   --font-family: 'Roboto', -apple-system, system-ui, sans-serif, Arial, Inter;
   
