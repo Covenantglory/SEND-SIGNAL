@@ -11,43 +11,61 @@ export default function MarketingLayout({
         left: 0,
         right: 0,
         zIndex: 100,
-        background: 'rgba(16, 16, 18, 0.8)',
+        background: 'rgba(255, 255, 255, 0.8)',
         backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid var(--color-outline)',
+        borderBottom: '1px solid var(--color-outline-variant)',
       }}>
         <nav style={{
           maxWidth: '1200px',
           margin: '0 auto',
           padding: 'var(--spacing-md) var(--spacing-lg)',
-          display: 'flex',
+          display: 'grid',
+          gridTemplateColumns: '1fr auto 1fr',
           alignItems: 'center',
-          justifyContent: 'space-between',
         }}>
-          <a href="/" style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 'var(--spacing-sm)',
-            color: 'var(--color-on-surface)',
-            fontFamily: 'var(--font-title-large)',
-            fontWeight: 600,
-            fontSize: 'var(--text-title-large)',
-          }}>
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <rect width="32" height="32" rx="8" fill="var(--color-primary)"/>
-              <path d="M8 16C8 11.582 11.582 8 16 8C20.418 8 24 11.582 24 16C24 20.418 20.418 24 16 24" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-              <path d="M16 8V16L20 20" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            Send Signal
-          </a>
+          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <a href="/" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 'var(--spacing-sm)',
+              color: 'var(--color-on-surface)',
+              fontFamily: 'var(--font-title-large)',
+              fontWeight: 600,
+              fontSize: 'var(--text-title-large)',
+            }}>
+              <img src="/logo.svg" alt="Send Signal" width="32" height="32" />
+              Send Signal
+            </a>
+          </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 'var(--spacing-xl)' }}>
+            <a href="#features" style={{
+              color: 'var(--color-on-surface-variant)',
+              fontFamily: 'var(--font-label-large)',
+              fontSize: 'var(--text-label-large)',
+              fontWeight: 500,
+            }}>
+              Features
+            </a>
+            <a href="#use-cases" style={{
+              color: 'var(--color-on-surface-variant)',
+              fontFamily: 'var(--font-label-large)',
+              fontSize: 'var(--text-label-large)',
+              fontWeight: 500,
+            }}>
+              Use Cases
+            </a>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 'var(--spacing-md)' }}>
             <a href="/login" style={{
               color: 'var(--color-on-surface)',
               fontFamily: 'var(--font-label-large)',
               fontSize: 'var(--text-label-large)',
               padding: 'var(--spacing-sm) var(--spacing-md)',
+              fontWeight: 500,
             }}>
-              Sign In
+              Log in
             </a>
             <a href="/signup" style={{
               background: 'var(--color-primary)',
@@ -70,7 +88,7 @@ export default function MarketingLayout({
 
       <footer style={{
         background: 'var(--color-surface)',
-        borderTop: '1px solid var(--color-outline)',
+        borderTop: '1px solid var(--color-outline-variant)',
         padding: 'var(--spacing-3xl) var(--spacing-lg)',
         marginTop: 'var(--spacing-3xl)',
       }}>
@@ -91,11 +109,7 @@ export default function MarketingLayout({
             fontFamily: 'var(--font-title-large)',
             fontWeight: 600,
           }}>
-            <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
-              <rect width="32" height="32" rx="8" fill="var(--color-primary)"/>
-              <path d="M8 16C8 11.582 11.582 8 16 8C20.418 8 24 11.582 24 16C24 20.418 20.418 24 16 24" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-              <path d="M16 8V16L20 20" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            <img src="/logo.svg" alt="Send Signal" width="24" height="24" />
             Send Signal
           </div>
 
@@ -106,26 +120,6 @@ export default function MarketingLayout({
             maxWidth: '400px',
           }}>
             Automate personalized WhatsApp outreach campaigns. Import leads, create templates, and send messages at scale.
-          </p>
-
-          <div style={{
-            display: 'flex',
-            gap: 'var(--spacing-xl)',
-            color: 'var(--color-on-surface-variant)',
-            fontFamily: 'var(--font-body-medium)',
-            fontSize: 'var(--text-body-medium)',
-          }}>
-            <a href="#" style={{ color: 'inherit' }}>Privacy</a>
-            <a href="#" style={{ color: 'inherit' }}>Terms</a>
-            <a href="#" style={{ color: 'inherit' }}>Contact</a>
-          </div>
-
-          <p style={{
-            color: 'var(--color-on-surface-variant)',
-            fontFamily: 'var(--font-body-small)',
-            fontSize: 'var(--text-body-small)',
-          }}>
-            © 2024 Send Signal. All rights reserved.
           </p>
         </div>
       </footer>
