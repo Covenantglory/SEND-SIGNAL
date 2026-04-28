@@ -25,3 +25,19 @@ Ask AI agent to use body large text for the nav links
 - change te text button from get started free to get started for free
 - ask the agent to go to color system and pick a not very black color for the hero description text
 - ask the agent to use `0vh for the height of the whole marketing page
+
+# Signup Page
+- add a home link on the page. You can use the logo of the app to represent that
+- navigation: add a home link on the page. You can use the logo of the app to represent that.
+- input fields need hover interaction state
+
+# Signup Page-Ui problem
+- the buton label is not using the on primary color
+- remove form border
+- reduce the blackness of the label text
+- reduce default border blackness of the input fields
+- change the label text from "create account" to "Sign up"
+- remove all place holder
+- remove form description text
+- change the form text and button text to create account
+- change the background color of the header to the  background color of the signup form

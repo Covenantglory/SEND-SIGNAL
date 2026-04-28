@@ -66,10 +66,7 @@ export default function SignupPage() {
     <div className={styles.container}>
       <div className={styles.card}>
         <div className={styles.header}>
-          <h1 className={styles.title}>Create your account</h1>
-          <p className={styles.subtitle}>
-            Start automating your WhatsApp outreach today
-          </p>
+          <h1 className={styles.title}>Create account</h1>
         </div>
 
         {serverError && (
@@ -83,7 +80,6 @@ export default function SignupPage() {
             value={formData.companyName}
             onChange={handleChange}
             error={errors.companyName}
-            placeholder="Acme Inc."
             required
           />
 
@@ -94,7 +90,6 @@ export default function SignupPage() {
             value={formData.email}
             onChange={handleChange}
             error={errors.email}
-            placeholder="you@company.com"
             required
           />
 
@@ -105,12 +100,11 @@ export default function SignupPage() {
             value={formData.password}
             onChange={handleChange}
             error={errors.password}
-            placeholder="At least 8 characters"
             required
           />
 
           <Button type="submit" fullWidth loading={loading}>
-            Create Account
+            Create account
           </Button>
         </form>
 

@@ -3,7 +3,7 @@
 
 :root {
   --color-primary: var(--sys-primitive-colour-collection-key-colour-group-primary-key-colour);
-  --color-on-primary: var(--sys-primitive-colour-collection-color-palettes-primary-primary-99);
+  --color-on-primary: var(--sys-primitive-colour-collection-color-palettes-primary-primary-100);
   --color-primary-container: var(--sys-primitive-colour-collection-color-palettes-primary-primary-95);
   --color-on-primary-container: var(--sys-primitive-colour-collection-color-palettes-primary-primary-20);
 
@@ -33,6 +33,8 @@
 
   --color-outline: var(--sys-primitive-colour-collection-color-palettes-neutral-neutral-50);
   --color-outline-variant: var(--sys-primitive-colour-collection-color-palettes-neutral-neutral-80);
+
+  --color-on-neutral-variant: var(--sys-primitive-colour-collection-color-palettes-neutral-variant-neutral-variant-30);
 
   --color-error: var(--sys-primitive-colour-collection-key-colour-group-error-key-colour);
   --color-on-error: var(--sys-primitive-colour-collection-color-palettes-error-error-99);
