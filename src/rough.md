@@ -41,3 +41,22 @@ Ask AI agent to use body large text for the nav links
 - remove form description text
 - change the form text and button text to create account
 - change the background color of the header to the  background color of the signup form
+- add a margin of 32px between form title and form
+- add animation to input focus
+
+# Form State
+- Empty input states
+
+# Company Name Field
+- prevent special characters
+- minimumof 2 characters
+- if a user goes into focus mode and leaves the input without typng their company name, display an error using the error color from the design system saying "Field must not be empty". Remove the error only when they start typing in the input field.
+
+-display "enter a valid company email address" the moment the user starts typing in the email field. Remove the error message only when the extension in the email address that does not end with "gmail.com" or "yahoo.com".
+
+- for the password requirements display this in real time as the user types in the password field. If the requirements are not met, display an error using the error color from the design system.
+
+* password must be 8 characters
+* password must contain a number
+* password must contain a special character
+

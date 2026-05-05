@@ -28,9 +28,27 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setServerError('');
+
+    // Client-side validation
+    const newErrors: Record<string, string> = {};
+    if (!formData.companyName.trim()) {
+      newErrors.companyName = 'Enter Your Company Name';
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = 'Enter Your Company Email';
+    }
+    if (!formData.password.trim()) {
+      newErrors.password = 'Choose a password';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     setErrors({});
+    setLoading(true);
 
     try {
       const res = await fetch('/api/auth/signup', {
@@ -80,7 +98,6 @@ export default function SignupPage() {
             value={formData.companyName}
             onChange={handleChange}
             error={errors.companyName}
-            required
           />
 
           <Input
@@ -90,7 +107,6 @@ export default function SignupPage() {
             value={formData.email}
             onChange={handleChange}
             error={errors.email}
-            required
           />
 
           <Input
@@ -100,7 +116,6 @@ export default function SignupPage() {
             value={formData.password}
             onChange={handleChange}
             error={errors.password}
-            required
           />
 
           <Button type="submit" fullWidth loading={loading}>
