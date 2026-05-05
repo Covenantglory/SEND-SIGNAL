@@ -59,4 +59,6 @@ Ask AI agent to use body large text for the nav links
 * password must be 8 characters
 * password must contain a number
 * password must contain a special character
+* password must start with an uppercase
 
+- do not display all the password requirements at once. Display them as the user types in the password field and as they meet each requirement, display a green checkmark next to it.
