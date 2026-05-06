@@ -2,7 +2,10 @@ import { z } from 'zod';
 
 export const signupSchema = z.object({
   companyName: z.string().min(2, 'Company name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
+  email: z.string().email('Enter a Valid Company Email Address').refine((email) => {
+    const domain = email.split('@')[1]?.toLowerCase();
+    return domain !== 'google.com' && domain !== 'yahoo.com';
+  }, 'This is not a Valid Company Email Address'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
 });
 

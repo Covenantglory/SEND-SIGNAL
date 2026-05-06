@@ -21,9 +21,53 @@ export default function SignupPage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) {
+
+    if (name === 'email') {
+      const trimmed = value.trim();
+      if (!trimmed) {
+        setErrors((prev) => ({ ...prev, email: 'Enter a Valid Company Email Address' }));
+      } else {
+        const emailDomain = trimmed.split('@')[1]?.toLowerCase();
+        if (emailDomain === 'google.com' || emailDomain === 'yahoo.com') {
+          setErrors((prev) => ({ ...prev, email: 'This is not a Valid Company Email Address' }));
+        } else {
+          setErrors((prev) => ({ ...prev, email: '' }));
+        }
+      }
+    } else if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
     }
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const newErrors: Record<string, string> = { ...errors };
+
+    if (name === 'companyName' && !value.trim()) {
+      newErrors.companyName = 'This field cannot be empty';
+    } else if (name === 'companyName') {
+      delete newErrors.companyName;
+    }
+
+    if (name === 'email') {
+      if (!value.trim()) {
+        newErrors.email = 'This field cannot be empty';
+      } else {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+          newErrors.email = 'Enter a Valid Company Email Address';
+        } else {
+          const emailDomain = value.split('@')[1]?.toLowerCase();
+          if (emailDomain === 'google.com' || emailDomain === 'yahoo.com') {
+            newErrors.email = 'This is not a Valid Company Email Address';
+          } else {
+            delete newErrors.email;
+          }
+        }
+      }
+    }
+
+    setErrors(newErrors);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -36,7 +80,12 @@ export default function SignupPage() {
       newErrors.companyName = 'Enter Your Company Name';
     }
     if (!formData.email.trim()) {
-      newErrors.email = 'Enter Your Company Email';
+      newErrors.email = 'Enter a Valid Company Email Address';
+    } else {
+      const emailDomain = formData.email.split('@')[1]?.toLowerCase();
+      if (emailDomain === 'google.com' || emailDomain === 'yahoo.com') {
+        newErrors.email = 'This is not a Valid Company Email Address';
+      }
     }
     if (!formData.password.trim()) {
       newErrors.password = 'Choose a password';
@@ -97,6 +146,7 @@ export default function SignupPage() {
             name="companyName"
             value={formData.companyName}
             onChange={handleChange}
+            onBlur={handleBlur}
             error={errors.companyName}
           />
 
@@ -106,6 +156,7 @@ export default function SignupPage() {
             type="email"
             value={formData.email}
             onChange={handleChange}
+            onBlur={handleBlur}
             error={errors.email}
           />
 
