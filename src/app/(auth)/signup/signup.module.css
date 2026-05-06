@@ -63,3 +63,21 @@
 .link:hover {
   text-decoration: underline;
 }
+
+.passwordReqs {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: -8px;
+}
+
+.passwordReq {
+  font-family: var(--font-label-small);
+  font-size: var(--text-label-small);
+  color: var(--color-error);
+  margin: 0;
+}
+
+.submitButton {
+  padding: 16px !important;
+}

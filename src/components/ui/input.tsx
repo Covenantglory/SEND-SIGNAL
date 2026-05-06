@@ -7,10 +7,11 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
   hint?: string;
+  isValid?: boolean;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, hint, className = '', id, ...props }, ref) => {
+  ({ label, error, hint, isValid, className = '', id, ...props }, ref) => {
     const inputId = id || props.name;
 
     return (
@@ -24,7 +25,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           id={inputId}
-          className={`${styles.input} ${error ? styles.inputError : ''} ${className}`}
+          className={`${styles.input} ${error ? styles.inputError : ''} ${isValid && !error ? styles.inputValid : ''} ${className}`}
           {...props}
         />
         {error && <span className={styles.error}>{error}</span>}

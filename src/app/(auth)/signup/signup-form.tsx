@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import styles from './signup.module.css';
 
-export default function SignupPage() {
+export default function SignupForm() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     companyName: '',
@@ -15,23 +15,8 @@ export default function SignupPage() {
     password: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [validFields, setValidFields] = useState<Record<string, boolean>>({});
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState('');
-  const [showPasswordReqs, setShowPasswordReqs] = useState(false);
-
-  const passwordReqs = [
-    { key: 'length', label: 'Password must be a minimum of 8 characters', met: formData.password.length >= 8 },
-    { key: 'number', label: 'Password must contain a number', met: /\d/.test(formData.password) },
-    { key: 'special', label: 'Password must contain a special character', met: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(formData.password) },
-    { key: 'uppercase', label: 'Password must contain an uppercase', met: /[A-Z]/.test(formData.password) },
-  ];
-
-  const allPasswordReqsMet = passwordReqs.every((req) => req.met);
-
-  useEffect(() => {
-    document.title = 'Create account';
-  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -39,11 +24,15 @@ export default function SignupPage() {
 
     if (name === 'email') {
       const trimmed = value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
       if (!trimmed) {
-        setErrors((prev) => ({ ...prev, email: 'Enter A Valid Company Email Address' }));
+        setErrors((prev) => ({ ...prev, email: 'Enter a Valid Company Email Address' }));
+      } else if (!emailRegex.test(trimmed)) {
+        setErrors((prev) => ({ ...prev, email: 'Enter a Valid Company Email Address' }));
       } else {
         const emailDomain = trimmed.split('@')[1]?.toLowerCase();
-        if (emailDomain === 'gmail.com' || emailDomain === 'yahoo.com') {
+        if (emailDomain === 'google.com' || emailDomain === 'yahoo.com') {
           setErrors((prev) => ({ ...prev, email: 'This is not a Valid Company Email Address' }));
         } else {
           setErrors((prev) => ({ ...prev, email: '' }));
@@ -51,21 +40,6 @@ export default function SignupPage() {
       }
     } else if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
-    }
-
-    if (name === 'password') {
-      if (value.length > 0) {
-        setShowPasswordReqs(true);
-      }
-      const isLengthMet = value.length >= 8;
-      const isNumberMet = /\d/.test(value);
-      const isSpecialMet = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(value);
-      const isUppercaseMet = /[A-Z]/.test(value);
-      if (isLengthMet && isNumberMet && isSpecialMet && isUppercaseMet) {
-        setValidFields((prev) => ({ ...prev, password: true }));
-      } else {
-        setValidFields((prev) => ({ ...prev, password: false }));
-      }
     }
   };
 
@@ -82,38 +56,18 @@ export default function SignupPage() {
     if (name === 'email') {
       if (!value.trim()) {
         newErrors.email = 'This field cannot be empty';
-        setValidFields((prev) => ({ ...prev, email: false }));
       } else {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(value)) {
           newErrors.email = 'Enter a Valid Company Email Address';
-          setValidFields((prev) => ({ ...prev, email: false }));
         } else {
           const emailDomain = value.split('@')[1]?.toLowerCase();
-          if (emailDomain === 'gmail.com' || emailDomain === 'yahoo.com') {
+          if (emailDomain === 'google.com' || emailDomain === 'yahoo.com') {
             newErrors.email = 'This is not a Valid Company Email Address';
-            setValidFields((prev) => ({ ...prev, email: false }));
           } else {
             delete newErrors.email;
-            setValidFields((prev) => ({ ...prev, email: true }));
           }
         }
-      }
-    } else if (name === 'companyName') {
-      if (value.trim()) {
-        setValidFields((prev) => ({ ...prev, companyName: true }));
-      } else {
-        setValidFields((prev) => ({ ...prev, companyName: false }));
-      }
-    } else if (name === 'password') {
-      const isLengthMet = value.length >= 8;
-      const isNumberMet = /\d/.test(value);
-      const isSpecialMet = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(value);
-      const isUppercaseMet = /[A-Z]/.test(value);
-      if (value.trim() && isLengthMet && isNumberMet && isSpecialMet && isUppercaseMet) {
-        setValidFields((prev) => ({ ...prev, password: true }));
-      } else {
-        setValidFields((prev) => ({ ...prev, password: false }));
       }
     }
 
@@ -136,15 +90,13 @@ export default function SignupPage() {
         newErrors.email = 'Enter a Valid Company Email Address';
       } else {
         const emailDomain = formData.email.split('@')[1]?.toLowerCase();
-        if (emailDomain === 'gmail.com' || emailDomain === 'yahoo.com') {
+        if (emailDomain === 'google.com' || emailDomain === 'yahoo.com') {
           newErrors.email = 'This is not a Valid Company Email Address';
         }
       }
     }
     if (!formData.password.trim()) {
       newErrors.password = 'Choose a password';
-    } else if (!allPasswordReqsMet) {
-      newErrors.password = 'Password does not meet all requirements';
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -204,18 +156,16 @@ export default function SignupPage() {
             onChange={handleChange}
             onBlur={handleBlur}
             error={errors.companyName}
-            isValid={validFields.companyName}
           />
 
           <Input
-            label="Work Email"
+            label="Email"
             name="email"
             type="email"
             value={formData.email}
             onChange={handleChange}
             onBlur={handleBlur}
             error={errors.email}
-            isValid={validFields.email}
           />
 
           <Input
@@ -224,25 +174,10 @@ export default function SignupPage() {
             type="password"
             value={formData.password}
             onChange={handleChange}
-            onBlur={handleBlur}
             error={errors.password}
-            isValid={validFields.password}
           />
 
-          {showPasswordReqs && (
-            <div className={styles.passwordReqs}>
-              {passwordReqs.map(
-                (req) =>
-                  !req.met && (
-                    <p key={req.key} className={styles.passwordReq}>
-                      • {req.label}
-                    </p>
-                  )
-              )}
-            </div>
-          )}
-
-          <Button type="submit" fullWidth loading={loading} className={styles.submitButton}>
+          <Button type="submit" fullWidth loading={loading}>
             Create account
           </Button>
         </form>
