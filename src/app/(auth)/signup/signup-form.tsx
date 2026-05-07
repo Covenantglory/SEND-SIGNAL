@@ -15,6 +15,7 @@ export default function SignupForm() {
     password: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState('');
 
@@ -46,6 +47,7 @@ export default function SignupForm() {
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const newErrors: Record<string, string> = { ...errors };
+    setTouched((prev) => ({ ...prev, [name]: true }));
 
     if (name === 'companyName' && !value.trim()) {
       newErrors.companyName = 'This field cannot be empty';
@@ -69,6 +71,12 @@ export default function SignupForm() {
           }
         }
       }
+    }
+
+    if (name === 'password' && !value.trim()) {
+      newErrors.password = 'Choose a password';
+    } else if (name === 'password') {
+      delete newErrors.password;
     }
 
     setErrors(newErrors);
@@ -156,6 +164,7 @@ export default function SignupForm() {
             onChange={handleChange}
             onBlur={handleBlur}
             error={errors.companyName}
+            isValid={touched.companyName && !errors.companyName && formData.companyName.trim() !== ''}
           />
 
           <Input
@@ -166,6 +175,7 @@ export default function SignupForm() {
             onChange={handleChange}
             onBlur={handleBlur}
             error={errors.email}
+            isValid={touched.email && !errors.email && formData.email.trim() !== ''}
           />
 
           <Input
@@ -174,7 +184,9 @@ export default function SignupForm() {
             type="password"
             value={formData.password}
             onChange={handleChange}
+            onBlur={handleBlur}
             error={errors.password}
+            isValid={touched.password && !errors.password && formData.password.trim() !== ''}
           />
 
           <Button type="submit" fullWidth loading={loading}>

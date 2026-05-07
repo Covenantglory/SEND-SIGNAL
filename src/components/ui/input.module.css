@@ -56,8 +56,9 @@
   box-shadow: 0 0 0 2px var(--color-error-container);
 }
 
-.inputValid {
-  background-color: var(--sys-color-roles-example-primary-roles-primary-container-color-role);
+.input.inputValid {
+  background-color: #cde7feff;
+  border-color: transparent;
 }
 
 .error {

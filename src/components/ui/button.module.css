@@ -95,6 +95,9 @@
 .spinner {
   display: inline-flex;
   animation: spin 1s linear infinite;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .spinner svg {
