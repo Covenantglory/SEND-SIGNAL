@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 export default function MarketingLayout({
   children,
@@ -8,6 +9,13 @@ export default function MarketingLayout({
   children: React.ReactNode;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Simple check for session cookie
+    const hasSession = document.cookie.split(';').some((item) => item.trim().startsWith('session='));
+    setIsLoggedIn(hasSession);
+  }, []);
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--color-background)' }}>
@@ -19,17 +27,18 @@ export default function MarketingLayout({
         zIndex: 100,
         background: 'rgba(255, 255, 255, 0.8)',
         backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid var(--color-outline-variant)',
       }}>
         <nav style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '16px 6rem',
-          display: 'grid',
-          gridTemplateColumns: '1fr auto 1fr',
+          padding: '16px 2rem',
+          display: 'flex',
+          justifyContent: 'space-between',
           alignItems: 'center',
         }}>
-          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <a href="/" style={{
+          <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-start' }}>
+            <Link href="/" style={{
               display: 'flex',
               alignItems: 'center',
               gap: 'var(--spacing-sm)',
@@ -40,30 +49,30 @@ export default function MarketingLayout({
             }}>
               <img src="/logo.svg" alt="Send Signal" width="32" height="32" />
               Send Signal
-            </a>
+            </Link>
           </div>
 
           <div className="desktop-nav" style={{ display: 'flex', justifyContent: 'center', gap: 'var(--spacing-xl)' }}>
-            <a href="#features" style={{
+            <Link href="#features" style={{
               color: 'var(--color-on-surface-variant)',
               fontFamily: 'var(--font-body-large)',
               fontSize: 'var(--text-body-large)',
               fontWeight: 500,
             }}>
               Features
-            </a>
-            <a href="#use-cases" style={{
+            </Link>
+            <Link href="#use-cases" style={{
               color: 'var(--color-on-surface-variant)',
               fontFamily: 'var(--font-body-large)',
               fontSize: 'var(--text-body-large)',
               fontWeight: 500,
             }}>
               Use Cases
-            </a>
+            </Link>
           </div>
 
-          <div className="desktop-cta" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-            <a href="/signup" style={{
+          <div className="desktop-cta" style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+            <Link href={isLoggedIn ? "/dashboard" : "/signup"} style={{
               background: 'var(--color-primary)',
               color: 'var(--color-on-primary)',
               fontFamily: 'var(--font-label-large)',
@@ -71,21 +80,23 @@ export default function MarketingLayout({
               padding: 'var(--spacing-sm) var(--spacing-lg)',
               borderRadius: 'var(--radius-md)',
               fontWeight: 500,
+              transition: 'all 0.2s ease',
             }}>
-              Get Started
-            </a>
+              {isLoggedIn ? 'Go to Dashboard' : 'Get Started'}
+            </Link>
           </div>
 
           <button
             className="mobile-menu-btn"
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
             style={{
               display: 'none',
               background: 'none',
               border: 'none',
               cursor: 'pointer',
               padding: '8px',
-              justifyContent: 'flex-end',
+              color: 'var(--color-on-surface)',
             }}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -106,34 +117,39 @@ export default function MarketingLayout({
             top: '100%',
             left: 0,
             right: 0,
-            background: 'rgba(255, 255, 255, 0.95)',
-            backdropFilter: 'blur(12px)',
-            padding: 'var(--spacing-md)',
+            background: 'rgba(255, 255, 255, 0.98)',
+            backdropFilter: 'blur(16px)',
+            padding: 'var(--spacing-lg)',
             display: menuOpen ? 'flex' : 'none',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: 'var(--spacing-sm)',
+            gap: 'var(--spacing-md)',
             boxShadow: 'var(--shadow-lg)',
+            borderBottom: '1px solid var(--color-outline-variant)',
           }}>
-            <a href="#features" style={{
+            <Link href="#features" onClick={() => setMenuOpen(false)} style={{
               color: 'var(--color-on-surface-variant)',
               fontFamily: 'var(--font-body-large)',
               fontSize: 'var(--text-body-large)',
               fontWeight: 500,
-              padding: 'var(--spacing-md) 0',
+              width: '100%',
+              textAlign: 'center',
+              padding: 'var(--spacing-sm)',
             }}>
               Features
-            </a>
-            <a href="#use-cases" style={{
+            </Link>
+            <Link href="#use-cases" onClick={() => setMenuOpen(false)} style={{
               color: 'var(--color-on-surface-variant)',
               fontFamily: 'var(--font-body-large)',
               fontSize: 'var(--text-body-large)',
               fontWeight: 500,
-              padding: 'var(--spacing-md) 0',
+              width: '100%',
+              textAlign: 'center',
+              padding: 'var(--spacing-sm)',
             }}>
               Use Cases
-            </a>
-            <a href="/signup" style={{
+            </Link>
+            <Link href={isLoggedIn ? "/dashboard" : "/signup"} onClick={() => setMenuOpen(false)} style={{
               background: 'var(--color-primary)',
               color: 'var(--color-on-primary)',
               fontFamily: 'var(--font-label-large)',
@@ -144,18 +160,14 @@ export default function MarketingLayout({
               textAlign: 'center',
               marginTop: 'var(--spacing-md)',
               width: '100%',
-              maxWidth: '200px',
+              maxWidth: '280px',
             }}>
-              Get Started
-            </a>
+              {isLoggedIn ? 'Go to Dashboard' : 'Get Started'}
+            </Link>
           </div>
 
           <style jsx>{`
             @media (max-width: 768px) {
-              nav {
-                display: flex !important;
-                padding: 12px 1rem !important;
-              }
               .desktop-nav, .desktop-cta {
                 display: none !important;
               }

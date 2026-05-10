@@ -4,7 +4,8 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const isDashboardRoute = pathname.startsWith('/leads') ||
+  const isDashboardRoute = pathname === '/dashboard' ||
+    pathname.startsWith('/leads') ||
     pathname.startsWith('/templates') ||
     pathname.startsWith('/campaigns') ||
     pathname.startsWith('/messages') ||
@@ -26,7 +27,7 @@ export function middleware(request: NextRequest) {
   }
 
   if (isAuthRoute && hasSession) {
-    return NextResponse.redirect(new URL('/', request.url));
+    return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
   return NextResponse.next();

@@ -196,7 +196,7 @@ export default function SignupPage() {
           <div className={styles.errorBanner}>{serverError}</div>
         )}
 
-        <form onSubmit={handleSubmit} className={styles.form}>
+        <form onSubmit={handleSubmit} method="POST" className={styles.form}>
           <Input
             label="Company Name"
             name="companyName"

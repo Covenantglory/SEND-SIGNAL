@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { getCurrentUser } from '@/lib/auth';
 import styles from './page.module.css';
 
 const features = [
@@ -101,7 +102,12 @@ const steps = [
   },
 ];
 
-export default function MarketingPage() {
+export default async function MarketingPage() {
+  const user = await getCurrentUser();
+  const isLoggedIn = !!user;
+  const ctaLink = isLoggedIn ? '/dashboard' : '/signup';
+  const ctaText = isLoggedIn ? 'Go to Dashboard' : 'Get Started for Free';
+
   return (
     <div className={styles.container}>
       <section className={styles.hero}>
@@ -114,8 +120,8 @@ export default function MarketingPage() {
             and run automated WhatsApp campaigns that convert. All with full compliance built-in.
           </p>
           <div className={styles.heroCta}>
-            <Link href="/signup" className={styles.primaryCta}>
-              Get Started for Free
+            <Link href={ctaLink} className={styles.primaryCta}>
+              {ctaText}
             </Link>
           </div>
         </div>
@@ -179,8 +185,8 @@ export default function MarketingPage() {
             Join businesses using Send Signal to automate their WhatsApp campaigns.
           </p>
           <div className={styles.heroCta}>
-            <Link href="/signup" className={styles.primaryCta}>
-              Get Started for Free
+            <Link href={ctaLink} className={styles.primaryCta}>
+              {ctaText}
             </Link>
           </div>
         </div>
