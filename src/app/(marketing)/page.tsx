@@ -103,11 +103,6 @@ const steps = [
 ];
 
 export default async function MarketingPage() {
-  const user = await getCurrentUser();
-  const isLoggedIn = !!user;
-  const ctaLink = isLoggedIn ? '/dashboard' : '/signup';
-  const ctaText = isLoggedIn ? 'Go to Dashboard' : 'Get Started for Free';
-
   return (
     <div className={styles.container}>
       <section className={styles.hero}>
@@ -120,8 +115,8 @@ export default async function MarketingPage() {
             and run automated WhatsApp campaigns that convert. All with full compliance built-in.
           </p>
           <div className={styles.heroCta}>
-            <Link href={ctaLink} className={styles.primaryCta}>
-              {ctaText}
+            <Link href="/signup" className={styles.primaryCta}>
+              Create Account
             </Link>
           </div>
         </div>
@@ -185,8 +180,8 @@ export default async function MarketingPage() {
             Join businesses using Send Signal to automate their WhatsApp campaigns.
           </p>
           <div className={styles.heroCta}>
-            <Link href={ctaLink} className={styles.primaryCta}>
-              {ctaText}
+            <Link href="/signup" className={styles.primaryCta}>
+              Create Account
             </Link>
           </div>
         </div>
