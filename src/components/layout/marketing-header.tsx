@@ -19,12 +19,11 @@ export default function MarketingHeader({ isLoggedIn }: MarketingHeaderProps) {
       zIndex: 100,
       background: 'rgba(255, 255, 255, 0.8)',
       backdropFilter: 'blur(12px)',
-      borderBottom: '1px solid var(--color-outline-variant)',
     }}>
       <nav style={{
-        maxWidth: '1200px',
+        maxWidth: '100%',
         margin: '0 auto',
-        padding: '16px 2rem',
+        padding: '16px 6rem',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -74,7 +73,7 @@ export default function MarketingHeader({ isLoggedIn }: MarketingHeaderProps) {
             fontWeight: 500,
             transition: 'all 0.2s ease',
           }}>
-            Create Account
+            Get started for free
           </Link>
         </div>
 
@@ -154,7 +153,7 @@ export default function MarketingHeader({ isLoggedIn }: MarketingHeaderProps) {
             width: '100%',
             maxWidth: '280px',
           }}>
-            Create Account
+            Get started for free
           </Link>
         </div>
 
