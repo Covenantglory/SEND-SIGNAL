@@ -15,7 +15,7 @@ export default async function MarketingPage() {
           </p>
           <div className={styles.heroCta}>
             <Link href="/signup" className={styles.primaryCta}>
-              Get started for free
+              Get Started For Free
             </Link>
           </div>
         </div>

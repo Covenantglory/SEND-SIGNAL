@@ -63,7 +63,7 @@ export default function MarketingHeader({ isLoggedIn }: MarketingHeaderProps) {
         </div>
 
         <div className="desktop-cta" style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-          <Link href="/signup" style={{
+          <Link href="/signup" className="primary-button-header" style={{
             background: 'var(--color-primary)',
             color: 'var(--color-on-primary)',
             fontFamily: 'var(--font-label-large)',
@@ -73,7 +73,7 @@ export default function MarketingHeader({ isLoggedIn }: MarketingHeaderProps) {
             fontWeight: 500,
             transition: 'all 0.2s ease',
           }}>
-            Get started for free
+            Get Started For Free
           </Link>
         </div>
 
@@ -140,7 +140,7 @@ export default function MarketingHeader({ isLoggedIn }: MarketingHeaderProps) {
           }}>
             Use Cases
           </Link>
-          <Link href="/signup" onClick={() => setMenuOpen(false)} style={{
+          <Link href="/signup" className="primary-button-header" onClick={() => setMenuOpen(false)} style={{
             background: 'var(--color-primary)',
             color: 'var(--color-on-primary)',
             fontFamily: 'var(--font-label-large)',
@@ -153,11 +153,15 @@ export default function MarketingHeader({ isLoggedIn }: MarketingHeaderProps) {
             width: '100%',
             maxWidth: '280px',
           }}>
-            Get started for free
+            Get Started For Free
           </Link>
         </div>
 
         <style jsx>{`
+          .primary-button-header:hover {
+            background: var(--color-primary-container) !important;
+            color: var(--color-on-primary-container) !important;
+          }
           @media (max-width: 768px) {
             .desktop-nav, .desktop-cta {
               display: none !important;
