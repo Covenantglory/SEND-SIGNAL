@@ -44,7 +44,7 @@
 }
 
 .primary:hover:not(:disabled) {
-  background-color: var(--sys-primitive-colour-collection-color-palettes-primary-primary-40);
+  background-color: var(--color-on-primary-container);
 }
 
 .primary:active:not(:disabled) {

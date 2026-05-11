@@ -20,10 +20,9 @@ export default function MarketingHeader({ isLoggedIn }: MarketingHeaderProps) {
       background: 'rgba(255, 255, 255, 0.8)',
       backdropFilter: 'blur(12px)',
     }}>
-      <nav style={{
+      <nav className="marketing-nav" style={{
         maxWidth: '100%',
         margin: '0 auto',
-        padding: '16px 6rem',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -86,7 +85,7 @@ export default function MarketingHeader({ isLoggedIn }: MarketingHeaderProps) {
             background: 'none',
             border: 'none',
             cursor: 'pointer',
-            padding: '8px',
+            padding: '0.5rem',
             color: 'var(--color-on-surface)',
           }}
         >
@@ -140,7 +139,7 @@ export default function MarketingHeader({ isLoggedIn }: MarketingHeaderProps) {
           }}>
             Use Cases
           </Link>
-          <Link href="/signup" className="primary-button-header" onClick={() => setMenuOpen(false)} style={{
+          <Link href="/signup" className="primary-button-header mobile-cta" onClick={() => setMenuOpen(false)} style={{
             background: 'var(--color-primary)',
             color: 'var(--color-on-primary)',
             fontFamily: 'var(--font-label-large)',
@@ -158,9 +157,13 @@ export default function MarketingHeader({ isLoggedIn }: MarketingHeaderProps) {
         </div>
 
         <style jsx>{`
-          .primary-button-header:hover {
-            background: var(--color-primary-container) !important;
-            color: var(--color-on-primary-container) !important;
+          .marketing-nav {
+            padding: 16px 6rem;
+          }
+          .primary-button-header:hover,
+          .mobile-cta:hover {
+            background: var(--color-on-primary-container) !important;
+            color: var(--color-on-primary) !important;
           }
           @media (max-width: 768px) {
             .desktop-nav, .desktop-cta {
@@ -168,6 +171,9 @@ export default function MarketingHeader({ isLoggedIn }: MarketingHeaderProps) {
             }
             .mobile-menu-btn {
               display: flex !important;
+            }
+            .marketing-nav {
+              padding: 16px 0.5rem;
             }
           }
         `}</style>
