@@ -19,6 +19,7 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState('');
   const [showPasswordReqs, setShowPasswordReqs] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const passwordReqs = [
     { key: 'length', label: 'Password must be a minimum of 8 characters', met: formData.password.length >= 8 },

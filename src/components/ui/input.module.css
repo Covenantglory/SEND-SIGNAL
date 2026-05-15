@@ -28,6 +28,36 @@
   transition: all 0.5s ease;
 }
 
+.hasRightElement {
+  padding-right: 44px;
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.rightElement {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color-on-surface-variant);
+  line-height: 1;
+}
+
+.rightElement:hover {
+  color: var(--color-on-surface);
+}
+
 .input::placeholder {
   color: var(--color-on-surface-variant);
 }
