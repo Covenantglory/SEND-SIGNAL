@@ -18,7 +18,8 @@
   padding: 16px 6rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  position: relative;
 }
 
 .logo {
@@ -37,6 +38,8 @@
   font-size: var(--text-label-large);
   font-weight: 500;
   text-decoration: none;
+  position: absolute;
+  right: 6rem;
 }
 
 .headerLink:hover {
@@ -57,5 +60,9 @@
 @media (max-width: 768px) {
   .nav {
     padding: 12px 1rem;
+  }
+
+  .headerLink {
+    right: 1rem;
   }
 }
