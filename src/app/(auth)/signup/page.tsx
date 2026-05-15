@@ -25,7 +25,7 @@ export default function SignupPage() {
     { key: 'length', label: 'Password must be a minimum of 8 characters', met: formData.password.length >= 8 },
     { key: 'number', label: 'Password must contain a number', met: /\d/.test(formData.password) },
     { key: 'special', label: 'Password must contain a special character', met: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(formData.password) },
-    { key: 'uppercase', label: 'Password must contain an uppercase', met: /[A-Z]/.test(formData.password) },
+    { key: 'uppercase', label: 'Password must start with an uppercase letter', met: /^[A-Z]/.test(formData.password) },
   ];
 
   const allPasswordReqsMet = passwordReqs.every((req) => req.met);
@@ -61,7 +61,7 @@ export default function SignupPage() {
       const isLengthMet = value.length >= 8;
       const isNumberMet = /\d/.test(value);
       const isSpecialMet = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(value);
-      const isUppercaseMet = /[A-Z]/.test(value);
+      const isUppercaseMet = /^[A-Z]/.test(value);
       if (isLengthMet && isNumberMet && isSpecialMet && isUppercaseMet) {
         setValidFields((prev) => ({ ...prev, password: true }));
       } else {
@@ -110,7 +110,7 @@ export default function SignupPage() {
       const isLengthMet = value.length >= 8;
       const isNumberMet = /\d/.test(value);
       const isSpecialMet = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(value);
-      const isUppercaseMet = /[A-Z]/.test(value);
+      const isUppercaseMet = /^[A-Z]/.test(value);
       if (value.trim() && isLengthMet && isNumberMet && isSpecialMet && isUppercaseMet) {
         setValidFields((prev) => ({ ...prev, password: true }));
       } else {
@@ -232,14 +232,11 @@ export default function SignupPage() {
 
           {showPasswordReqs && (
             <div className={styles.passwordReqs}>
-              {passwordReqs.map(
-                (req) =>
-                  !req.met && (
-                    <p key={req.key} className={styles.passwordReq}>
-                      • {req.label}
-                    </p>
-                  )
-              )}
+              {passwordReqs.map((req) => (
+                <p key={req.key} className={`${styles.passwordReq} ${req.met ? styles.passwordReqMet : ''}`}>
+                  {req.met ? '✓' : '•'} {req.label}
+                </p>
+              ))}
             </div>
           )}
 

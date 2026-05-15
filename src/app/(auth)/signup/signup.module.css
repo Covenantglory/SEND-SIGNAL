@@ -78,6 +78,10 @@
   margin: 0;
 }
 
+.passwordReqMet {
+  color: var(--color-success) !important;
+}
+
 .submitButton {
   padding: 16px !important;
 }
