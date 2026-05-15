@@ -26,6 +26,9 @@ function LoginForm() {
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
     }
+    if (serverError) {
+      setServerError('');
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -44,7 +47,9 @@ function LoginForm() {
       const data = await res.json();
 
       if (!res.ok) {
-        if (data.details?.fieldErrors) {
+        if (res.status === 401) {
+          setServerError('An invalid email or password');
+        } else if (data.details?.fieldErrors) {
           const fieldErrors: Record<string, string> = {};
           data.details.fieldErrors.forEach((err: { path: string[]; message: string }) => {
             fieldErrors[err.path[0]] = err.message;
@@ -90,16 +95,28 @@ function LoginForm() {
             required
           />
 
-          <Input
-            label="Password"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            error={errors.password}
-            placeholder="Enter your password"
-            required
-          />
+          <div>
+            <div className={styles.passwordLabelRow}>
+              <label htmlFor="password" className={styles.passwordLabel}>
+                Password
+              </label>
+              <Link href="/forgot-password" className={styles.forgotLink}>
+                Forgot password?
+              </Link>
+            </div>
+            <div style={{ marginTop: '4px' }}>
+              <Input
+                name="password"
+                id="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                error={errors.password}
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+          </div>
 
           <Button type="submit" fullWidth loading={loading}>
             Sign In

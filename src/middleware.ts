@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
     pathname.startsWith('/conversations') ||
     pathname.startsWith('/settings');
 
-  const isAuthRoute = pathname.startsWith('/login') || pathname.startsWith('/signup');
+  const isAuthRoute = pathname.startsWith('/login') || pathname.startsWith('/signup') || pathname.startsWith('/forgot-password');
   
   const isOnboardingRoute = pathname.startsWith('/onboarding');
 
