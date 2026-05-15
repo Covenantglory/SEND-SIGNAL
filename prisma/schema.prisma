@@ -97,6 +97,21 @@ model User {
   conversations        Conversation[]
   activityLogs         ActivityLog[]
   analyticsSnapshots   AnalyticsSnapshot[]
+  passwordResetTokens  PasswordResetToken[]
+}
+
+model PasswordResetToken {
+  id        String    @id @default(uuid())
+  userId    String
+  token     String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([userId])
 }
 
 model Session {

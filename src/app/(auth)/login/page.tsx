@@ -118,7 +118,7 @@ function LoginForm() {
             </div>
           </div>
 
-          <Button type="submit" fullWidth loading={loading}>
+          <Button type="submit" fullWidth loading={loading} className={styles.submitButton}>
             Sign In
           </Button>
         </form>

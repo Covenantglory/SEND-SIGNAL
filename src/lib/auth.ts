@@ -7,7 +7,7 @@ const JWT_SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || 'send-signal-secret-key-change-in-production'
 );
 
-const SESSION_DURATION_DAYS = 7;
+const SESSION_DURATION_DAYS = 14;
 
 export interface SessionUser {
   id: string;
@@ -30,7 +30,7 @@ export async function createSession(userId: string): Promise<string> {
 
   const token = await new SignJWT({ userId })
     .setProtectedHeader({ alg: 'HS256' })
-    .setExpirationTime('7d')
+    .setExpirationTime('14d')
     .setIssuedAt()
     .sign(JWT_SECRET);
 

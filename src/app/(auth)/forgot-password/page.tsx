@@ -37,11 +37,26 @@ export default function ForgotPasswordPage() {
 
     setLoading(true);
 
-    // Simulate API call — backend reset flow to be implemented later
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const res = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: trimmed }),
+      });
 
-    setLoading(false);
-    setSubmitted(true);
+      if (!res.ok) {
+        const data = await res.json();
+        setError(data.error || 'An error occurred');
+        setLoading(false);
+        return;
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setError('An unexpected error occurred');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
@@ -76,7 +91,7 @@ export default function ForgotPasswordPage() {
         <div className={styles.header}>
           <h1 className={styles.title}>Reset password</h1>
           <p className={styles.subtitle}>
-            Enter the email address associated with your account
+            Enter your email to receive a reset link
           </p>
         </div>
 
